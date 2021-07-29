@@ -31,10 +31,10 @@ public class UsuarioDAO {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "Ash.01475369");
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO cliente (nome, email, login, senha, endereco) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, c.getNome());
-            preparedStatement.setString(3, c.getEmail());
-            preparedStatement.setString(4, c.getLogin());
-            preparedStatement.setString(5, c.getSenha());
-            preparedStatement.setString(2, c.getEndereco());
+            preparedStatement.setString(2, c.getEmail());
+            preparedStatement.setString(3, c.getLogin());
+            preparedStatement.setString(4, c.getSenha());
+            preparedStatement.setString(5, c.getEndereco());
             sucesso = (preparedStatement.executeUpdate() == 1);
             preparedStatement.close();
             connection.close();
