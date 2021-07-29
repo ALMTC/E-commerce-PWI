@@ -1,3 +1,12 @@
+<%-- 
+    Document   : cadastrar
+    Created on : 28/07/2021, 18:02:21
+    Author     : Notebook
+--%>
+
+<%@page import="usuario.modelo.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <title>E-commerce PWI</title>
@@ -8,6 +17,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
     <body>
+        <%Usuario usuario = (Usuario) session.getAttribute("usuario");%>
         <header class="p-3 bg-dark text-white">
             <div class="container">
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -16,8 +26,8 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                  <li><a href="index.html" class="nav-link px-2 text-secondary">Home</a></li>
-                  <li><a href="carrinho.html" class="nav-link px-2 text-white">Carrinho</a></li>
+                  <li><a href="index.jsp" class="nav-link px-2 text-secondary">Home</a></li>
+                  <li><a href="carrinho.jsp" class="nav-link px-2 text-white">Carrinho</a></li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Categoria
@@ -28,6 +38,7 @@
                       <li><a class="dropdown-item" href="#">Categoria n</a></li>
                     </ul>
                   </li>
+                  <%if(usuario != null && usuario.getTipo() == "Cliente"){%>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Usuário padrão
@@ -36,9 +47,11 @@
                       <li><a class="dropdown-item" href="#">Finalizar compra</a></li>
                       <li><a class="dropdown-item" href="#">Seus Pedidos</a></li>
                       <li><a class="dropdown-item" href="#">Atualizar dados</a></li>
-                      <li><button class="dropdown-item">Sair</button></li>
+                      <li><a class="dropdown-item" href="Logout">Sair</a></li>
                     </ul>
                   </li>
+                  <%}%>
+                  <%if(usuario != null && usuario.getTipo() == "Administrador"){%>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Administrador
@@ -47,9 +60,10 @@
                       <li><a class="dropdown-item" href="#">Gerenciar estoque</a></li>
                       <li><a class="dropdown-item" href="#">Gerenciar cadastros</a></li>
                       <li><a class="dropdown-item" href="#">Relatórios do sistema</a></li>
-                      <li><button class="dropdown-item">Sair</button></li>
+                      <li><a class="dropdown-item" href="Logout">Sair</a></li>
                     </ul>
                   </li>
+                  <%}%>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -57,20 +71,19 @@
                 </form>
 
                 <div class="text-end">
-                  <a class="btn btn-outline-light me-2" href="login.html">Login</a>
-                  <a class="btn btn-warning" href="cadastrar.html">Cadastrar-se</a>
+                  <%if(usuario == null){%>
+                  <a class="btn btn-outline-light me-2" href="login.jsp">Login</a>
+                  <a class="btn btn-warning" href="cadastrar.jsp">Cadastrar-se</a>
+                  <%}%>
                 </div>
               </div>
             </div>
           </header>
         <div id='div_et2' class="mx-auto">
-            <form method="post" name="cadastro" id="login" action="Cadastrar">
+            <form method="post" name="cadastro" id="login" action="CadastrarUsuario">
                 
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" class="form-control form_element" id="cadastro-nome" name="nome" placeholder="Digite seu nome" required>
-                
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control form_element" id="cadastro-email" name="email" placeholder="Digite seu email" required>
                 
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control form_element" id="cadastro-email" name="email" placeholder="Digite seu email" required>
@@ -84,8 +97,11 @@
                 <label for="senha" class="form-label">Senha</label>
                 <input type="password" class="form-control form_element" id="cadastro-senha" name="senha" placeholder="Digite sua senha" required>
 
-                <input type="submit" id='bt_formet2' value="Entrar">
+                <input type="submit" id='bt_formet2' value="Cadastrar">
             </form>
+            <% if (request.getAttribute("mensagem") != null) {%>
+            <div id="resposta"><%= request.getAttribute("mensagem")%></div>
+            <% }%>
         </div>
         
         <!-- Option 1: Bootstrap Bundle with Popper -->

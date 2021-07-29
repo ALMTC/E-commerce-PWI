@@ -36,6 +36,10 @@
     background-color: #FFCA2C;
 }
 
+#resposta{
+    margin: auto;
+    text-align: center;
+}
 
 @media only screen and (max-width: 499px) {
   #div_et2{
