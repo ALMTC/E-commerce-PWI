@@ -6,10 +6,12 @@
 package usuario.controle;
 
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import usuario.modelo.Usuario;
 import usuario.modelo.UsuarioDAO;
 
@@ -54,11 +56,18 @@ public class AlterarCadastroServlet extends HttpServlet {
             sucesso = usuarioDAO.alterarUsuario(u);
             if(sucesso){
                 request.setAttribute("mensagem", "Cliente alterado com sucesso");
+                HttpSession session = request.getSession();
+                session.invalidate();
+                session = request.getSession(true);
+                Usuario usuario = usuarioDAO.obter(login);
+                session.setAttribute("usuario", usuario);
             }else{
                 request.setAttribute("mensagem", "Não foi possível alterar o cliente");
             }
         } catch (Exception ex) {
             request.setAttribute("mensagem", "Não foi possível alterar o cliente");
         }
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("alterarcadastro.jsp");
+        requestDispatcher.forward(request, response);
     }
 }

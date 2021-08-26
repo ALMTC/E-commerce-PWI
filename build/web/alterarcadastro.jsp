@@ -138,7 +138,7 @@
             </div>
         </header>
         <div id='div_et2' class="mx-auto">
-            <form method="post" name="alterarcadastro" id="login" action="AlterarCadastro">
+            <form method="post" name="alterarcadastro" id="alterar" action="AlterarCadastro">
                 <input type="hidden" name="id" value="<%= usuario.getId()%>">
                 <input type="hidden" name="tipo" value="<%= usuario.getTipo()%>">
                 

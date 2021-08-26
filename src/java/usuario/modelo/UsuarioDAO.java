@@ -127,15 +127,16 @@ public class UsuarioDAO {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "Ash.01475369");
             PreparedStatement preparedStatement;
             if(u.getTipo().equals("Cliente")){
-                preparedStatement = connection.prepareStatement("UPDATE cliente Set nome = ?, email = ?, login = ?. senha = ? WHERE id = ?");
+                preparedStatement = connection.prepareStatement("UPDATE cliente Set nome = ?, email = ?, login = ?, senha = ?, endereco = ? WHERE id = ?");
             }else{
-                preparedStatement = connection.prepareStatement("UPDATE administrador Set nome = ?, email = ?, login = ?, senha = ? WHERE id = ?");
+                preparedStatement = connection.prepareStatement("UPDATE administrador Set nome = ?, email = ?, login = ?, senha = ?, endereco = ? WHERE id = ?");
             }
             preparedStatement.setString(1, u.getNome());
             preparedStatement.setString(2, u.getEmail());
             preparedStatement.setString(3, u.getLogin());
             preparedStatement.setString(4, u.getSenha());
-            preparedStatement.setInt(5, u.getId());
+            preparedStatement.setString(5, u.getEndereco());    
+            preparedStatement.setInt(6, u.getId());
             sucesso = (preparedStatement.executeUpdate() == 1);
             preparedStatement.close();
             connection.close();
