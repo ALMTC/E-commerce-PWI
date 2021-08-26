@@ -52,6 +52,14 @@
         <servlet-name>InicioServlet</servlet-name>
         <servlet-class>inicio.controle.InicioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdicionarProdutoCategoriaServlet</servlet-name>
+        <servlet-class>produtocategoria.controle.AdicionarProdutoCategoriaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoverProdutoCategoriaServlet</servlet-name>
+        <servlet-class>produtocategoria.controle.RemoverProdutoCategoriaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarUsuario</servlet-name>
         <url-pattern>/CadastrarUsuario</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>InicioServlet</servlet-name>
         <url-pattern>/Inicio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdicionarProdutoCategoriaServlet</servlet-name>
+        <url-pattern>/AdicionarProdutoCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoverProdutoCategoriaServlet</servlet-name>
+        <url-pattern>/RemoverProdutoCategoria</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

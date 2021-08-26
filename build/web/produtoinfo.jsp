@@ -4,6 +4,11 @@
     Author     : Notebook
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="categoria.modelo.Categoria"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="categoria.modelo.CategoriaDAO"%>
 <%@page import="produto.modelo.Produto"%>
 <%@page import="usuario.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -240,6 +245,28 @@
 
                         <input type="submit" id='bt_formet2' value="Alterar">
                     </form>
+                        <%
+                            CategoriaDAO categoriaDAO = new CategoriaDAO();
+                            List<Categoria> categorias = new ArrayList<>();
+                            categorias = categoriaDAO.obterCategorias();
+                            if(categorias != null){
+                        %>
+                        <hr>
+                        <form method="post" name="linkProdCat" id="linkProdCat" action="AdicionarProdutoCategoria">
+                            <input type="hidden" name="produtoId" value="<%= p.getId()%>">
+                            <label for="categoria" class="form-label">Adicionar categoria</label>
+                            <select id="operacao" name="categoriaId" form="linkProdCat" class="form-control form_element" >
+                                <option value="0">Não adicionar</option>
+                                <%  Iterator<Categoria> iter = categorias.iterator();
+                                    Categoria aux=new Categoria();
+                                    while(iter.hasNext()){ 
+                                        aux = iter.next();%>
+                                <option value="<%= aux.getId() %>"><%= aux.getDescricao() %></option>
+                                <%}%>
+                            </select>
+                            <input type="submit" id='bt_formet2' value="Adicionar">
+                        </form>
+                        <%}%>
                 <% }%>
             <% }%>
             </div>

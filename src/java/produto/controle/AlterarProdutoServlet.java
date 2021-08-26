@@ -86,7 +86,7 @@ public class AlterarProdutoServlet extends HttpServlet {
                     ProdutoDAO produtoDAO = new ProdutoDAO();
                     produtoDAO.alterarProduto(id, descricao, quantidade, valor);
                     request.setAttribute("mensagem", "Alteração deste produto foi efetuado com sucesso");
-                    if(foto != null && id != -1){
+                    if(foto != null && id != -1 && !foto.getName().equals("")){
                         Produto p = produtoDAO.obter(id);
                         if(p.getFoto() != null){
                             File fotoAtual = new File(p.getFoto());
