@@ -164,7 +164,7 @@
                         <tr>
                             <td><%= aux.getId()%></td>
                             <td><%= aux.getNome()%></td>
-                            <td>R$ <%= aux.getTotalCompras()%></td>
+                            <td><%= aux.getTotalCompras()%></td>
                         </tr>
                         <%}%>
                     </tbody>

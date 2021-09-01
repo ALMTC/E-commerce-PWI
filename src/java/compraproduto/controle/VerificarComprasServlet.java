@@ -43,7 +43,6 @@ public class VerificarComprasServlet extends HttpServlet {
         CompraProdutoDAO compraprodutoDAO = new CompraProdutoDAO();
         try {
             valores = compraprodutoDAO.retornarCompras(usuarioId);
-            request.setAttribute("mensagem", "pegou valor");
         } catch (Exception ex) {
             Logger.getLogger(VerificarComprasServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
