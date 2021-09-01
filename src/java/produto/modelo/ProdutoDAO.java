@@ -53,7 +53,35 @@ public class ProdutoDAO {
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "Ash.01475369");
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, descricao, preco, quantidade, foto FROM produto WHERE quantidade > 0");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, descricao, preco, quantidade, foto from produto, produto_categoria where produto.id = produto_categoria.produto_id and produto.quantidade > 0 order by produto_categoria.categoria_id");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Produto p = new Produto();
+                p.setId(resultSet.getInt("id"));
+                p.setDescricao(resultSet.getString("descricao"));
+                p.setPreco(resultSet.getDouble("preco"));
+                p.setQuantidade(resultSet.getInt("quantidade"));
+                p.setFoto(resultSet.getString("foto"));
+                produtos.add(p);
+            }
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (ClassNotFoundException ex) {
+            return null;
+        } catch (SQLException ex) {
+            return null;
+        }
+        return produtos;
+    }
+    
+    public List<Produto> obterProdutosEmEstoque(int categoria) {
+        List<Produto> produtos = new ArrayList<Produto>();
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "Ash.01475369");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, descricao, preco, quantidade, foto from produto, produto_categoria where produto.id = produto_categoria.produto_id and produto.quantidade > 0 and produto_categoria.categoria_id = ? order by produto_categoria.categoria_id");
+            preparedStatement.setInt(1, categoria);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Produto p = new Produto();

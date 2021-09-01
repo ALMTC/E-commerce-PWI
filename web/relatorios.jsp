@@ -1,14 +1,17 @@
 <%-- 
-    Document   : login
-    Created on : 28/07/2021, 17:54:07
+    Document   : relatorios
+    Created on : 01/09/2021, 03:26:46
     Author     : Notebook
 --%>
 
-<%@page import="java.util.Iterator"%>
-<%@page import="categoria.modelo.Categoria"%>
-<%@page import="categoria.modelo.CategoriaDAO"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="relatorio.modelo.Relatorio1"%>
+<%@page import="relatorio.modelo.Relatorio3"%>
+<%@page import="relatorio.modelo.Relatorio2"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="categoria.modelo.CategoriaDAO"%>
+<%@page import="categoria.modelo.Categoria"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="usuario.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -130,23 +133,93 @@
             </div>
         </header>
         <div id='div_et2' class="mx-auto">
-            <form method="post" name="login" id="login" action="Login">
-
-                <label for="login" class="form-label">Login</label>
-                <input type="text" class="form-control form_element" id="login-login" name="login" placeholder="Digite seu login" required>
-                
-                <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control form_element" id="login-senha" name="senha" placeholder="Digite sua senha" required>
-
-                <input type="submit" id='bt_formet2' value="Entrar">
+            <%if(request.getAttribute("relatorio") == null){%>
+            <form method="post"  name="verificarCat" id="remover-prod" action="Relatorio1">
+                <input type="submit" id='bt_formet2' value="Total de Compras por Cliente">
             </form>
+            <form method="post"  name="verificarCat" id="remover-prod" action="Relatorio2">
+                <input type="submit" id='bt_formet2' value="Produtos Indisponíveis em Estoque">
+            </form>
+            <form method="post"  name="verificarCat" id="remover-prod" action="Relatorio3">
+                <input type="submit" id='bt_formet2' value="Total Apurado">
+            </form>
+            <%}else{
+                if(request.getAttribute("relatorio").equals("relatorio1")){%>
+                
+                <h2 style="text-align: center;">Compras por Cliente</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id do Cliente</th>
+                            <th>Nome do Cliente</th>
+                            <th>Compras Feitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  List<Relatorio1> relatorio = (List<Relatorio1>) request.getAttribute("resultado");
+                            Iterator<Relatorio1> iter = relatorio.iterator();
+                            Relatorio1 aux = new Relatorio1();
+                            while (iter.hasNext()) {
+                                aux = iter.next();%>
+                        <tr>
+                            <td><%= aux.getId()%></td>
+                            <td><%= aux.getNome()%></td>
+                            <td>R$ <%= aux.getTotalCompras()%></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                
+                <%}%>
+                <%if(request.getAttribute("relatorio").equals("relatorio2")){%>
+                <h2 style="text-align: center;">Produtos indisponíveis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id do produto</th>
+                            <th>Nome do produto</th>
+                            <th>Preço</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  List<Relatorio2> valores = (List<Relatorio2>) request.getAttribute("resultado");
+                            Iterator<Relatorio2> iter = valores.iterator();
+                            Relatorio2 aux = new Relatorio2();
+                            while (iter.hasNext()) {
+                                aux = iter.next();%>
+                        <tr>
+                            <td><%= aux.getId()%></td>
+                            <td><%= aux.getDescricao()%></td>
+                            <td>R$ <%= aux.getPreco()%></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                <%}%>
+                <%if(request.getAttribute("relatorio").equals("relatorio3")){%>
+                
+                <h2 style="text-align: center;">Valor Total de Compras</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Número de Compras Realizadas</th>
+                            <th>Valor Total em Compras</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  Relatorio3 relatorio = (Relatorio3)request.getAttribute("resultado");%>
+                        <tr>
+                            <td><%= relatorio.getQtdCompras() %></td>
+                            <td><%= relatorio.getTotalCompras() %></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <%}%>
+            <%}%>
             <% if (request.getAttribute("mensagem") != null) {%>
             <div id="resposta"><%= request.getAttribute("mensagem")%></div>
             <% }%>
         </div>
-        
-        <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
-

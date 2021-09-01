@@ -1,3 +1,6 @@
+<%@page import="categoria.modelo.Categoria"%>
+<%@page import="categoria.modelo.CategoriaDAO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="produto.modelo.Produto"%>
@@ -19,21 +22,31 @@
         <header class="p-3 bg-dark text-white">
             <div class="container">
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="http://placekitten.com/40/32" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                  <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><a href="Inicio" class="nav-link px-2 text-secondary">Home</a></li>
-                  <li><a href="carrinho.jsp" class="nav-link px-2 text-white">Carrinho</a></li>
+                  <li><a href="GerarPaginaCarrinhoCompra" class="nav-link px-2 text-white">Carrinho</a></li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Categoria
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Categoria 1</a></li>
-                      <li><a class="dropdown-item" href="#">Categoria 2</a></li>
-                      <li><a class="dropdown-item" href="#">Categoria n</a></li>
+                      <%
+                            List<Categoria> categorias = new ArrayList<>();
+                            CategoriaDAO categoriaDAO = new CategoriaDAO();
+                            categorias = categoriaDAO.obterCategorias();
+                            if (categorias == null || categorias.isEmpty()){
+                      %>
+                      <li><p class="dropdown-item" href="Inicio">Sem Categorias</p></li>
+                      <%
+                          }else{
+                                Iterator<Categoria> iter = categorias.iterator();
+                                Categoria c=new Categoria();
+                                while(iter.hasNext()){
+                                    c = iter.next();
+                      %>
+                      <li><a class="dropdown-item" href="Inicio?categoria=<%= c.getId()%>"><%= c.getDescricao()%></a></li>
+                      <%}
+                        }%>
                     </ul>
                   </li>
                   <%if(usuario != null && usuario.getTipo() == "Cliente"){%>
@@ -42,8 +55,8 @@
                       Usuário padrão
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Finalizar compra</a></li>
-                      <li><a class="dropdown-item" href="#">Seus Pedidos</a></li>
+                      <li><a class="dropdown-item" href="GerarPaginaCarrinhoCompra">Finalizar compra</a></li>
+                      <li><a class="dropdown-item" href="VerificarCompras?usuarioId=<%= usuario.getId() %>">Seus Pedidos</a></li>
                       <li><a class="dropdown-item" href="alterarcadastro.jsp">Atualizar dados</a></li>
                       <li><a class="dropdown-item" href="Logout">Sair</a></li>
                     </ul>
@@ -59,28 +72,16 @@
                           <a class="dropdown-item" href="#">Produtos</a>
                           <ul>
                               <li>
-                                  <form method="post" action="GerirProduto">
-                                      <input type="hidden" name="acao" value="verificar">
-                                      <input type="submit" value="Verificar Produto"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirProduto?acao=verificar" class="dropdown-item">Verificar Produto</a>
                               </li>
                               <li>
-                                  <form method="post" action="GerirProduto">
-                                      <input type="hidden" name="acao" value="adicionar">
-                                      <input type="submit" value="Adicionar Produto"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirProduto?acao=adicionar" class="dropdown-item">Adicionar Produto</a>
                               </li>
                               <li>
-                                   <form method="post" action="GerirProduto">
-                                      <input type="hidden" name="acao" value="alterar">
-                                      <input type="submit" value="Alterar Produto"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirProduto?acao=alterar" class="dropdown-item">Alterar Produto</a>
                               </li>
                               <li>
-                                   <form method="post" action="GerirProduto">
-                                      <input type="hidden" name="acao" value="remover">
-                                      <input type="submit" value="Remover Produto"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirProduto?acao=remover" class="dropdown-item">Remover Produto</a>
                               </li>
                           </ul>
                       </li>
@@ -88,31 +89,21 @@
                           <a class="dropdown-item" href="#">Categorias</a>
                           <ul>
                               <li>
-                                  <form method="post" action="GerirCategoria">
-                                      <input type="hidden" name="acao" value="verificar">
-                                      <input type="submit" value="Verificar Categoria"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirCategoria?acao=verificar" class="dropdown-item">Verificar Categoria</a>
                               </li>
                               <li>
-                                  <form method="post" action="GerirCategoria">
-                                      <input type="hidden" name="acao" value="adicionar">
-                                      <input type="submit" value="Adicionar Categoria"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirCategoria?acao=adicionar" class="dropdown-item">Adicionar Categoria</a>
                               </li>
                               <li>
-                                   <form method="post" action="GerirCategoria">
-                                      <input type="hidden" name="acao" value="alterar">
-                                      <input type="submit" value="Alterar Categoria"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirCategoria?acao=alterar" class="dropdown-item">Alterar Categoria</a>
                               </li>
                               <li>
-                                   <form method="post" action="GerirCategoria">
-                                      <input type="hidden" name="acao" value="remover">
-                                      <input type="submit" value="Remover Categoria"class="dropdown-item" >
-                                  </form>
+                                  <a href="GerirCategoria?acao=remover" class="dropdown-item">Remover Categoria</a>
                               </li>
                           </ul>
                       </li>
+                      <li><a class="dropdown-item" href="relatorios.jsp">Relatórios</a></li>
+                      <li><a class="dropdown-item" href="VisualizarTodasCompras">Ver todas as compras</a></li>
                       <li><a class="dropdown-item" href="alterarcadastro.jsp">Atualizar dados</a></li>
                       <li><a class="dropdown-item" href="Logout">Sair</a></li>
                     </ul>
@@ -143,10 +134,10 @@
             <div>Não existem produtos em estoque</div>
             <%
                 } else {
-                    Iterator<Produto> iter = produtosDisponiveis.iterator();
+                    Iterator<Produto> iter2 = produtosDisponiveis.iterator();
                     Produto p=new Produto();
-                    while(iter.hasNext()){
-                        p = iter.next();
+                    while(iter2.hasNext()){
+                        p = iter2.next();
             %>
                     <div class="col">
                         <div class="card h-100">
@@ -155,7 +146,7 @@
                                 <h5 class="card-title"><%= p.getDescricao()%></h5>
                                 <p class="card-text">Valor: R$<%= p.getPreco()%></p>
                                 <p class="card-text">Quantidade em estoque: <%= p.getQuantidade()%></p>
-                                <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
+                                <a href="AdicionarProdutoCarrinhoCompra?produtoId=<%= p.getId()%>" class="btn btn-primary">Adicionar ao carrinho</a>
                             </div>
                         </div>
                     </div>

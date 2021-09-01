@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inicio.controle;
+package carrinhocompra.controle;
 
+import carrinhocompra.modelo.CarrinhoCompra;
+import carrinhocompra.modelo.CarrinhoCompraItem;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,14 +16,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import produto.modelo.Produto;
-import produto.modelo.ProdutoDAO;
 
 /**
  *
  * @author Notebook
  */
-public class InicioServlet extends HttpServlet {
+public class GerarPaginaCarrinhoCompraServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +32,9 @@ public class InicioServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /* processamento */
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        List<Produto> produtosDisponiveis = new ArrayList<>();
-        if(request.getParameter("categoria") == null){
-            produtosDisponiveis = produtoDAO.obterProdutosEmEstoque();
-        }else{
-            int categoria = Integer.parseInt(request.getParameter("categoria"));
-            produtosDisponiveis = produtoDAO.obterProdutosEmEstoque(categoria);
-        }
-        request.setAttribute("produtosDisponiveis", produtosDisponiveis);
         
         Cookie[] cookies = request.getCookies();
         Cookie cookie = null;
@@ -59,8 +49,14 @@ public class InicioServlet extends HttpServlet {
         }
         cookie.setMaxAge(Integer.MAX_VALUE);
         response.addCookie(cookie);
+        try {
+            List<CarrinhoCompraItem> carrinhoCompraItens = CarrinhoCompra.obterCarrinhoCompra(cookie.getValue());
+            request.setAttribute("carrinhoCompraItens", carrinhoCompraItens);
+        } catch (Exception ex) {
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        }
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("carrinho.jsp");
         requestDispatcher.forward(request, response);
     }
 }

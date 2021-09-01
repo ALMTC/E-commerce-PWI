@@ -158,4 +158,20 @@ public class UsuarioDAO {
         preparedStatement.close();
         connection.close();
     }
+    
+    public String retornarNome(int id) throws ClassNotFoundException, SQLException{
+        String nome = null;
+        Class.forName("org.postgresql.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "Ash.01475369");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT nome FROM cliente WHERE id = ?");
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+                nome = resultSet.getString("nome");
+        }
+        preparedStatement.close();
+        connection.close();
+        
+        return nome;
+    }
 }

@@ -1,23 +1,28 @@
 <%-- 
-    Document   : login
-    Created on : 28/07/2021, 17:54:07
+    Document   : todaascompras
+    Created on : 01/09/2021, 02:44:00
     Author     : Notebook
 --%>
 
-<%@page import="java.util.Iterator"%>
-<%@page import="categoria.modelo.Categoria"%>
-<%@page import="categoria.modelo.CategoriaDAO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
+<%@page import="usuario.modelo.UsuarioDAO"%>
 <%@page import="usuario.modelo.Usuario"%>
+<%@page import="categoria.modelo.CategoriaDAO"%>
+<%@page import="categoria.modelo.Categoria"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="compra.modelo.Compra"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>E-commerce PWI</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
+        <style><%@include file="style.css"%></style>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
@@ -129,24 +134,44 @@
               </div>
             </div>
         </header>
+
+        <%if (request.getAttribute("compras") != null) {%>
         <div id='div_et2' class="mx-auto">
-            <form method="post" name="login" id="login" action="Login">
-
-                <label for="login" class="form-label">Login</label>
-                <input type="text" class="form-control form_element" id="login-login" name="login" placeholder="Digite seu login" required>
-                
-                <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control form_element" id="login-senha" name="senha" placeholder="Digite sua senha" required>
-
-                <input type="submit" id='bt_formet2' value="Entrar">
-            </form>
-            <% if (request.getAttribute("mensagem") != null) {%>
-            <div id="resposta"><%= request.getAttribute("mensagem")%></div>
-            <% }%>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id da Compra</th>
+                            <th>Nome do Cliente</th>
+                            <th>Total</th>
+                            <th>---------</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  List<Compra> compras = (List<Compra>) request.getAttribute("compras");
+                            Iterator<Compra> iter = compras.iterator();
+                            Compra aux = new Compra();
+                            UsuarioDAO usarioDAO = new UsuarioDAO();
+                            while (iter.hasNext()) {
+                                aux = iter.next();%>
+                        <tr>
+                            <td><%= aux.getId()%></td>
+                            <td><%= usarioDAO.retornarNome(aux.getClienteId()) %></td>
+                            <td><%= aux.getTotal()%></td>
+                            <td><a class="dropdown-item" href="ExcluirCompra?id=<%= aux.getId()%>">Excluir Compra</a></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                    
+                </table>
+            </div>
+                <% if (request.getAttribute("mensagem") != null) {%>
+                <div id="resposta"><%= request.getAttribute("mensagem")%></div>
+                <% }%>
         </div>
+        <%}%>
         
-        <!-- Option 1: Bootstrap Bundle with Popper -->
+                    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
-

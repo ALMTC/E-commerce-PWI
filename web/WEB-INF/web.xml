@@ -60,6 +60,50 @@
         <servlet-name>RemoverProdutoCategoriaServlet</servlet-name>
         <servlet-class>produtocategoria.controle.RemoverProdutoCategoriaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdicionarProdutoCarrinhoCompraServlet</servlet-name>
+        <servlet-class>carrinhocompra.controle.AdicionarProdutoCarrinhoCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoverCarrinhoCompraServlet</servlet-name>
+        <servlet-class>carrinhocompra.controle.RemoverCarrinhoCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GerarPaginaCarrinhoCompraServlet</servlet-name>
+        <servlet-class>carrinhocompra.controle.GerarPaginaCarrinhoCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubtrairProdutoCarrinhoCompraServlet</servlet-name>
+        <servlet-class>carrinhocompra.controle.SubtrairProdutoCarrinhoCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FinalizarCompraCarrinhoCompraServlet</servlet-name>
+        <servlet-class>carrinhocompra.controle.FinalizarCompraCarrinhoCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerificarComprasServlet</servlet-name>
+        <servlet-class>compraproduto.controle.VerificarComprasServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VisualizarTodasComprasServlet</servlet-name>
+        <servlet-class>compra.controle.VisualizarTodasComprasServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExcluirCompraServlet</servlet-name>
+        <servlet-class>compra.controle.ExcluirCompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Relatorio2Servlet</servlet-name>
+        <servlet-class>relatorio.controle.Relatorio2Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Relatorio3Servlet</servlet-name>
+        <servlet-class>relatorio.controle.Relatorio3Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Relatorio1Servlet</servlet-name>
+        <servlet-class>relatorio.controle.Relatorio1Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarUsuario</servlet-name>
         <url-pattern>/CadastrarUsuario</url-pattern>
@@ -119,6 +163,50 @@
     <servlet-mapping>
         <servlet-name>RemoverProdutoCategoriaServlet</servlet-name>
         <url-pattern>/RemoverProdutoCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdicionarProdutoCarrinhoCompraServlet</servlet-name>
+        <url-pattern>/AdicionarProdutoCarrinhoCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoverCarrinhoCompraServlet</servlet-name>
+        <url-pattern>/RemoverCarrinhoCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GerarPaginaCarrinhoCompraServlet</servlet-name>
+        <url-pattern>/GerarPaginaCarrinhoCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubtrairProdutoCarrinhoCompraServlet</servlet-name>
+        <url-pattern>/SubtrairProdutoCarrinhoCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FinalizarCompraCarrinhoCompraServlet</servlet-name>
+        <url-pattern>/FinalizarCompraCarrinhoCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerificarComprasServlet</servlet-name>
+        <url-pattern>/VerificarCompras</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VisualizarTodasComprasServlet</servlet-name>
+        <url-pattern>/VisualizarTodasCompras</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExcluirCompraServlet</servlet-name>
+        <url-pattern>/ExcluirCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Relatorio2Servlet</servlet-name>
+        <url-pattern>/Relatorio2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Relatorio3Servlet</servlet-name>
+        <url-pattern>/Relatorio3</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Relatorio1Servlet</servlet-name>
+        <url-pattern>/Relatorio1</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
